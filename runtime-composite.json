@@ -1,0 +1,1 @@
+{"models":{"HelloWorld":{"interface":false,"implements":[],"id":"kjzl6hvfrbw6c5217gm158l4qvwet3h19pftloh07ier7sir9l55t9n7zvj9n0u","accountRelation":{"type":"list"}}},"objects":{"HelloWorld":{"greeting":{"type":"string","required":true,"immutable":false}}},"enums":{},"accountData":{"helloWorldList":{"type":"connection","name":"HelloWorld"}}}
