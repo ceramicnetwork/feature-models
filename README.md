@@ -34,10 +34,35 @@ For example use jq to extract the stream Id: `jq -r '(.models | keys)[0]' compos
 
 ### Listing Existing Documents
 
-Finally we can list and paginate through existing documents for a model.
-Again we need the stream Id for the model.
+Finally we can list existing documents for a model.
+We do this using GraphQL from the comand line.
 
-    composedb document:list kjzl6hvfrbw6c5217gm158l4qvwet3h19pftloh07ier7sir9l55t9n7zvj9n0u
+List to first 10 instances of the HelloWorld model.
+
+    composedb graphql:execute 'query{ helloWorldIndex(first:10){ edges{ node{ id greeting } } } }'
+
+However since this is a publicly shared model its likely that the model you just created is not among the first 10 ever created.
+We can instead use graphql to query the first 10 instances that we created.
+
+    composedb graphql:execute 'query($did: ID!) {
+      node(id: $did) {
+        ...on CeramicAccount {
+          helloWorldConnection (first: 10) {
+            edges {
+              node {
+                id
+                greeting
+              }
+            }
+          }
+        }
+      }
+    }'
+
+Note the `did` parameter is automatically supplied by the command.
+Other query parameters need to be supplied using `--vars`.
+
+See https://developers.ceramic.network/docs/composedb/guides/data-interactions/queries for a full explanation of GraphQL queries.
 
 ## Create a Model
 
